@@ -1,0 +1,313 @@
+#alerta-card-visualizar {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #00000080;
+  z-index: 999;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-close {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-btnclose {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.2rem;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-acao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-acao button {
+  height: 50px;
+  width: auto;
+  padding: 5px 20px;
+  background-color: #FDB870;
+  color: #5E6660;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 2.5px;
+  margin-top: 5px;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-acao .btn-card-view button {
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-acao .alerta-card-visualizar-btnclose {
+  background-color: #EBEBEB !important;
+  cursor: pointer;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-acao .alerta-card-visualizar-deletar {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-acao .alerta-card-visualizar-deletar a {
+  color: #ffffff;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-acao .alerta-card-visualizar-editar {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 600px) {
+  #alerta-card-visualizar .alerta-card-visualizar-acao button, #alerta-card-visualizar .alerta-card-visualizar-acao .btn-card-view {
+    width: 100%;
+  }
+  #alerta-card-visualizar .alerta-card-visualizar-acao .btn-card-view {
+    order: 1;
+  }
+  #alerta-card-visualizar .alerta-card-visualizar-acao .alerta-card-visualizar-btnclose {
+    order: 2;
+  }
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-content {
+  width: 850px;
+  height: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: #ffffff;
+  background: #f1f1f1;
+  border-radius: 5px;
+  padding: 60px 80px;
+  margin: 20px;
+  z-index: 10;
+  position: relative;
+}
+
+@media screen and (max-width: 600px) {
+  #alerta-card-visualizar .alerta-card-visualizar-content {
+    padding: 40px 40px;
+  }
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-content .h1-titulo,
+#alerta-card-visualizar .alerta-card-visualizar-content .conteudo {
+  background-color: #dedede;
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-content .loading {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#alerta-card-visualizar .alerta-card-visualizar-content .loading .loading-img {
+  width: 200px;
+  height: 200px;
+}
+
+.alerta-card-visualizar {
+  display: none;
+}
+
+.alerta-card-visualizar-active {
+  display: flex !important;
+}
+
+#alerta-add-licao {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #00000080;
+  z-index: 999;
+}
+
+#alerta-add-licao .alerta-add-licao-container {
+  width: 850px;
+  height: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 60px 80px;
+  margin: 20px;
+}
+
+#alerta-add-licao .alerta-add-licao-container .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
+#alerta-add-licao .alerta-add-licao-container .ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+  height: 200px;
+}
+
+@media screen and (max-width: 600px) {
+  #alerta-add-licao .alerta-add-licao-container {
+    padding: 60px 40px;
+  }
+}
+
+#alerta-add-licao .alerta-add-licao-container h2 {
+  margin-bottom: 20px;
+  font-size: 2.1rem;
+}
+
+#alerta-add-licao .alerta-add-licao-container form fieldset {
+  border: 0;
+  margin: 20px 0;
+}
+
+#alerta-add-licao .alerta-add-licao-container form fieldset legend {
+  padding: 10px 0;
+}
+
+#alerta-add-licao .alerta-add-licao-container form fieldset input,
+#alerta-add-licao .alerta-add-licao-container form fieldset textarea {
+  background: #F1F1F1;
+  border-radius: 4px;
+  width: 100%;
+  border: 0;
+  font-size: 1rem;
+}
+
+#alerta-add-licao .alerta-add-licao-container form fieldset input {
+  height: 50px;
+  padding: 5px 10px;
+}
+
+#alerta-add-licao .alerta-add-licao-container form fieldset textarea {
+  height: 200px;
+  padding: 20px 10px;
+}
+
+#alerta-add-licao .alerta-add-licao-container form fieldset .alerta-add-licao-btn {
+  padding: 11.5px 28.5px;
+  background: #113FFB;
+  color: #ffffff;
+  font-size: 1rem;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#alerta-add-licao .alerta-add-licao-container form fieldset .alerta-add-licao-finalizar {
+  background: #f6f6f6;
+  color: #272727;
+  margin-right: 10px;
+}
+
+.alerta-add-licao {
+  display: none;
+}
+
+.alerta-add-licao-active {
+  display: flex !important;
+}
+
+#alerta-editar-licao {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #00000080;
+  z-index: 999;
+}
+
+#alerta-editar-licao .alerta-editar-licao-container {
+  width: 850px;
+  height: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 60px 80px;
+  margin: 20px;
+}
+
+#alerta-editar-licao .alerta-editar-licao-container .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
+#alerta-editar-licao .alerta-editar-licao-container .ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+  height: 200px;
+}
+
+@media screen and (max-width: 600px) {
+  #alerta-editar-licao .alerta-editar-licao-container {
+    padding: 60px 40px;
+  }
+}
+
+#alerta-editar-licao .alerta-editar-licao-container h2 {
+  margin-bottom: 20px;
+  font-size: 2.1rem;
+}
+
+#alerta-editar-licao .alerta-editar-licao-container form fieldset {
+  border: 0;
+  margin: 20px 0;
+}
+
+#alerta-editar-licao .alerta-editar-licao-container form fieldset legend {
+  padding: 10px 0;
+}
+
+#alerta-editar-licao .alerta-editar-licao-container form fieldset input,
+#alerta-editar-licao .alerta-editar-licao-container form fieldset textarea {
+  background: #F1F1F1;
+  border-radius: 4px;
+  width: 100%;
+  border: 0;
+  font-size: 1rem;
+}
+
+#alerta-editar-licao .alerta-editar-licao-container form fieldset input {
+  height: 50px;
+  padding: 5px 10px;
+}
+
+#alerta-editar-licao .alerta-editar-licao-container form fieldset textarea {
+  height: 200px;
+  padding: 20px 10px;
+}
+
+#alerta-editar-licao .alerta-editar-licao-container form fieldset .alerta-add-licao-btn {
+  padding: 11.5px 28.5px;
+  background: #113FFB;
+  color: #ffffff;
+  font-size: 1rem;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#alerta-editar-licao .alerta-editar-licao-container form fieldset .alerta-add-licao-finalizar {
+  background: #f6f6f6;
+  color: #272727;
+  margin-right: 10px;
+}
+
+.alerta-editar-licao {
+  display: none;
+}
+
+.alerta-editar-licao-active {
+  display: flex !important;
+}

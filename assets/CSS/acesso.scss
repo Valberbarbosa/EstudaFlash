@@ -1,0 +1,50 @@
+@import url("./padrao.css");
+@import url("./style.css");
+
+#acesso {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: var(--max-width);
+  height: calc(100vh - 80px);
+  margin: auto;
+
+  form {
+    width: 480px;
+    padding: 40px 20px;
+
+    h2 {
+      color: #252F3F;
+      margin: 20px 0px;
+      font-size: 2.3rem;
+    }
+
+    fieldset {
+      border: 0;
+      margin-bottom: 20px;
+    }
+
+    legend {
+      padding: 7.5px 0;
+    }
+
+    input {
+      width: 100%;
+      height: 50px;
+      padding: 5px 10px;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: #FDB870;
+      border-radius: 4px;
+      width: 100%;
+      height: 50px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+}
