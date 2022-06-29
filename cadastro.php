@@ -3,8 +3,8 @@ session_start();
 require_once('pages/conexao.php');
 require_once('pages/validar_sessao.php');
 
-$sessionCookie = isset($_COOKIE['session'])? $_COOKIE['session']:null;
-$hashCookie = isset($_COOKIE['hash'])? $_COOKIE['hash']:null;
+$sessionCookie = isset($_COOKIE['session']) ? $_COOKIE['session'] : null;
+$hashCookie = isset($_COOKIE['hash']) ? $_COOKIE['hash'] : null;
 $session = new ValidarSessao($sessionCookie, $hashCookie);
 
 if ($session->validar()) {
@@ -72,7 +72,19 @@ if ($session->validar()) {
             </form>
         </section>
     </main>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/assets/JS/main.js"></script>
+    <?php if (isset($_SESSION['TIPO_ALERTA'])) { ?>
+        <script>
+            <?php if ($_SESSION['TIPO_ALERTA'] == 'error') { ?>
+                swal("Poxaa!", "Não conseguimos cadastrar essa conta", "error");
+            <?php } ?>
+            <?php if ($_SESSION['TIPO_ALERTA'] == 'warning') { ?>
+                swal("Poxaa!", "Esta conta já existe", "warning");
+            <?php } ?>
+        </script>
+        <?php unset($_SESSION['TIPO_ALERTA']); ?>
+    <?php } ?>
 </body>
 
 </html>

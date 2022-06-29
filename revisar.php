@@ -2,7 +2,7 @@
 session_start();
 require_once('pages/conexao.php');
 require_once('pages/validar_sessao.php');
-require_once('pages/exibir_card_publico.php');
+require_once('pages/buscar_card_revisao.php');
 require_once('pages/notificacao.php');
 
 $session = new ValidarSessao($_COOKIE['session'], $_COOKIE['hash']);
@@ -11,9 +11,11 @@ if (!$session->validar()) {
     header("Location: ../index.php");
 }
 
-$card = new ExibirCardPublico();
+$card = new ExibirCardRevisar();
 $notificacao = new Notificacao();
 $notificacao_conteudo = $notificacao->listar();
+
+$pesquisa = isset($_GET['search']) ? $_GET['search'] : null;
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +26,7 @@ $notificacao_conteudo = $notificacao->listar();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./assets/IMG/logo-favicon.svg" type="image/x-icon">
-    <title>EstudaFlash - O lugar perfeito para focar nos seus estudos</title>
+    <title>Revisão - EstudaFlash</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="assets/CSS/dasboard.css">
 
@@ -105,32 +107,51 @@ $notificacao_conteudo = $notificacao->listar();
                     </nav>
                 </div>
             </header>
+
             <section id="conteudo">
-                <p class="diretorio-website">Explorar</p>
+                <p class="diretorio-website">Revisar</p>
+
                 <div id="dashboard">
                     <div class="dashboard-container">
-                        <h2>Cartões públicos</h2>
-                        <p class="dashboard-paragrafo">Veja abaixo todos os cartões público que você pode visualizar e estudar a partir de conteúdos criados por outras pessoas</p>
-                        <div class="dashboard-card dashboard-card-mx-4">
+                        <h2>Revisar conteúdo</h2>
+
+                        <div class="dashboard-card" style="margin-top: 2rem;">
+
                             <?php
-                            if (count($card->exibir()) > 0) {
-                                foreach ($card->exibir() as $value) {
-                                    $total_exibirListas = $card->assunto($value['id']);
-                                    $total_exibirListas = $total_exibirListas['total'];
-                            ?>
-                                    <a href="cartoes.php?id=<?= $value['id'] ?>" class="dashboard-card-conteudo">
-                                        <div class="dashboard-card-corpo">
-                                            <h3><?= $value['titulo'] ?></h3>
-                                            <p class="dashboard-card-p-descricao"><?= $value['descricao'] ?></p>
-                                            <p class="dashboard-card-p-total"><?= $total_exibirListas ?> <?= $total_exibirListas > 1 ? 'cartões' : 'cartão' ?> criado até o momento</p>
+                            $timeZone = new DateTimeZone('America/Sao_Paulo');
+                            $objDateTo = new DateTime();
+                            $objDateTo->setTimezone($timeZone);
+                            $dataHoje = $objDateTo->format('Y-m-d');
+
+                            $listRevisar = false;
+                            foreach ($card->listar($pesquisa) as $card) {
+                                $firstDate = new DateTime($card['data']);
+                                $secondDate = new DateTime($dataHoje);
+                                $intvl = $firstDate->diff($secondDate);
+
+                                $conteudoCard = '<div data-id="' . $card['id_assunto'] . '" class="dashboard-card-conteudo dashboard-card-conteudo-cartoes">
+                                        <div data-id="' . $card['id_assunto'] . '" class="dashboard-card-corpo front">
+                                            <h1 data-id="' . $card['id_assunto'] . '">' . $card['titulo'] . '</h1>
                                         </div>
-                                    </a>
-                            <?php
+                                        <div data-id="' . $card['id_assunto'] . '" class="dashboard-card-acao">
+                                            <p>' . ucfirst($card['acao']) . '</p>
+                                        </div>
+                                    </div>';
+                                if ($card['acao'] == 'fácil' and $intvl->d == 0) {
+                                    $listRevisar = true;
+                                    echo $conteudoCard;
+                                } else if ($card['acao'] == 'médio' and $intvl->d > 0) {
+                                    $listRevisar = true;
+                                    echo $conteudoCard;
+                                } else if ($card['acao'] == 'difícil' and $intvl->d > 1) {
+                                    $listRevisar = true;
+                                    echo $conteudoCard;
                                 }
-                            } else {
-                                echo 'Nenhum card foi adicionado como público até o momento';
                             }
-                            ?>
+                            if (!$listRevisar) { ?>
+                                <p>Nenhum flashcard para revisar até o momento</p>
+                            <?php } ?>
+
 
                         </div>
                     </div>
@@ -138,7 +159,29 @@ $notificacao_conteudo = $notificacao->listar();
             </section>
         </main>
     </div>
+
+
+    <section id="alerta-card-visualizar" class="alerta-card-visualizar">
+        <div class="alerta-card-visualizar-content">
+            <div class="alerta-card-visualizar-container">
+                <div class="loading"><img class="loading-img" src="./assets/IMG/load-gif.gif" alt="loading"></div>
+            </div>
+            <div class="alerta-card-visualizar-acao">
+                <div class="btn-card-acoes">
+                    <button class="alerta-card-visualizar-editar"><a href="#">Continuar revisando</a></button>
+                    <button class="alerta-card-visualizar-concluida"><a href="#">Marcar como concluída</a></button>
+                </div>
+            </div>
+            <div class="alerta-card-visualizar-btnclose"><i class="fa-solid fa-xmark"></i></div>
+        </div>
+        <div class="alerta-card-visualizar-close"></div>
+
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./assets/JS/dashboard.js"></script>
+    <script src="./assets/JS/revisar.js"></script>
 </body>
 
 </html>

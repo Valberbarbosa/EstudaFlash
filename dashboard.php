@@ -3,6 +3,7 @@ session_start();
 require_once('pages/conexao.php');
 require_once('pages/validar_sessao.php');
 require_once('pages/exibir_lista.php');
+require_once('pages/notificacao.php');
 
 $session = new ValidarSessao($_COOKIE['session'], $_COOKIE['hash']);
 
@@ -11,6 +12,10 @@ if (!$session->validar()) {
 }
 
 $exibirListas = new ExibirLista();
+$notificacao = new Notificacao();
+$notificacao_conteudo = $notificacao->listar();
+
+$pesquisa = isset($_GET['search']) ? $_GET['search'] : null;
 
 ?>
 <!DOCTYPE html>
@@ -44,12 +49,12 @@ $exibirListas = new ExibirLista();
                 <ul>
                     <li><a href="dashboard.php"><i class="fas fa-home" aria-hidden="true"></i><span>Home</span></a></li>
                     <li><a href="explore.php"><i class="fas fa-sitemap"></i><span>Explore</span></a></li>
-                    <li><a href="perfil.php"><i class="fa-solid fa-user"></i><span>Perfil</span></a></li>
+                    <li><a href="revisar.php"><i class="fas fa-tasks"></i><span>Revisar</span></a></li>
                 </ul>
                 <div class="aside-diretorio-line"></div>
                 <ul>
-                    <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span>Configuração</span></a></li>
-                    <li><a href="#"><i class="fa-solid fa-right-from-bracket"></i><span>Sair</span></a></li>
+                    <li><a href="perfil.php"><i class="fa-solid fa-user"></i><span>Perfil</span></a></li>
+                    <li><a href="/pages/sair.php"><i class="fa-solid fa-right-from-bracket"></i><span>Sair</span></a></li>
                 </ul>
             </div>
         </aside>
@@ -68,8 +73,15 @@ $exibirListas = new ExibirLista();
                     </div>
                     <nav>
                         <ul>
-                            <li><i class="fa-regular fa-bell"></i></li>
-                            <li><i class="far fa-envelope"></i></li>
+                            <li>
+                                <i class="fa-regular fa-bell"></i>
+                                <span><?= $notificacao_conteudo['total'] ?></span>
+                                <div class="notificacao">
+                                    <?php foreach ($notificacao_conteudo['content'] as $notificacao_valor) {
+                                        echo $notificacao_valor;
+                                    } ?>
+                                </div>
+                            </li>
                         </ul>
                         <div class="header-acoes-foto">
                             <?php
@@ -101,18 +113,18 @@ $exibirListas = new ExibirLista();
                 <div id="dashboard">
                     <div class="dashboard-container">
                         <h2>Suas atividades</h2>
-                        <button class="dashbord-container-btn-add">Adicionar nova lição</button>
+                        <button class="dashbord-container-btn-add dashbord-container-btn-add-licao">Adicionar nova lição</button>
                         <div class="dashboard-card">
-                            <?php if (count($exibirListas->listar()) > 0) {
-                                foreach ($exibirListas->listar() as $valor_exibirListas) {
+                            <?php if (count($exibirListas->listar($pesquisa)) > 0) {
+                                foreach ($exibirListas->listar($pesquisa) as $valor_exibirListas) {
                                     $total_exibirListas = $exibirListas->assunto($valor_exibirListas['id']);
                                     $total_exibirListas = $total_exibirListas['total'];
                             ?>
                                     <a href="cartoes.php?id=<?= $valor_exibirListas['id'] ?>" class="dashboard-card-conteudo">
                                         <div class="dashboard-card-corpo">
                                             <h3><?= $valor_exibirListas['titulo'] ?></h3>
-                                            <p class="dashboard-card-p-descricao"><?= $valor_exibirListas['titulo'] ?></p>
-                                            <p class="dashboard-card-p-total"><?= $total_exibirListas ?> <?= $total_exibirListas > 1? 'cartões':'cartão' ?> criado até o momento</p>
+                                            <p class="dashboard-card-p-descricao"><?= $valor_exibirListas['descricao'] ?></p>
+                                            <p class="dashboard-card-p-total"><?= $total_exibirListas ?> <?= $total_exibirListas > 1 ? 'cartões' : 'cartão' ?> criado até o momento</p>
                                         </div>
                                     </a>
                                 <?php }
@@ -142,8 +154,8 @@ $exibirListas = new ExibirLista();
                     <textarea name="descricao" id="descricao" placeholder="Adicione uma descrição para essa categoria"></textarea>
                 </fieldset>
                 <fieldset>
-                    <button type="button" class="alerta-add-licao-finalizar">Cancelar</button>
-                    <button type="submit" class="alerta-add-licao-concluir">Adicionar</button>
+                    <button type="button" class="alerta-add-licao-btn alerta-add-licao-finalizar">Cancelar</button>
+                    <button type="submit" class="alerta-add-licao-btn alerta-add-licao-concluir">Adicionar</button>
                 </fieldset>
             </form>
         </div>

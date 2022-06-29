@@ -3,6 +3,7 @@ session_start();
 require_once('pages/conexao.php');
 require_once('pages/validar_sessao.php');
 require_once('pages/perfil.php');
+require_once('pages/notificacao.php');
 
 $session = new ValidarSessao($_COOKIE['session'], $_COOKIE['hash']);
 
@@ -12,6 +13,9 @@ if (!$session->validar()) {
 
 $perfil = new Perfil();
 $perfilDadosUsuario = $perfil->listar();
+$notificacao = new Notificacao();
+$notificacao_conteudo = $notificacao->listar();
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -44,12 +48,12 @@ $perfilDadosUsuario = $perfil->listar();
                 <ul>
                     <li><a href="dashboard.php"><i class="fas fa-home" aria-hidden="true"></i><span>Home</span></a></li>
                     <li><a href="explore.php"><i class="fas fa-sitemap"></i><span>Explore</span></a></li>
-                    <li><a href="perfil.php"><i class="fa-solid fa-user"></i><span>Perfil</span></a></li>
+                    <li><a href="revisar.php"><i class="fas fa-tasks"></i><span>Revisar</span></a></li>
                 </ul>
                 <div class="aside-diretorio-line"></div>
                 <ul>
-                    <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span>Configuração</span></a></li>
-                    <li><a href="#"><i class="fa-solid fa-right-from-bracket"></i><span>Sair</span></a></li>
+                    <li><a href="perfil.php"><i class="fa-solid fa-user"></i><span>Perfil</span></a></li>
+                    <li><a href="/pages/sair.php"><i class="fa-solid fa-right-from-bracket"></i><span>Sair</span></a></li>
                 </ul>
             </div>
         </aside>
@@ -69,8 +73,15 @@ $perfilDadosUsuario = $perfil->listar();
 
                     <nav>
                         <ul>
-                            <li><i class="fa-regular fa-bell"></i></li>
-                            <li><i class="far fa-envelope"></i></li>
+                            <li>
+                                <i class="fa-regular fa-bell"></i>
+                                <span><?= $notificacao_conteudo['total'] ?></span>
+                                <div class="notificacao">
+                                    <?php foreach ($notificacao_conteudo['content'] as $notificacao_valor) {
+                                        echo $notificacao_valor;
+                                    } ?>
+                                </div>
+                            </li>
                         </ul>
                         <div class="header-acoes-foto">
                             <?php
@@ -154,7 +165,7 @@ $perfilDadosUsuario = $perfil->listar();
             </section>
         </main>
     </div>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>e
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="./assets/JS/dashboard.js"></script>
     <script src="./assets/JS/perfil.js"></script>
 </body>
