@@ -6,7 +6,7 @@ class Conexao
     private $host = 'localhost';
     private $user = 'root';
     private $password = '';
-    private $dbname = 'EstudaFlash';
+    private $dbname = 'sku';
 
     public function conectar()
     {

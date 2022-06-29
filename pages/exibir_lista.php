@@ -3,11 +3,17 @@
 class ExibirLista extends Conexao
 {
 
-    public function listar()
+    public function listar($pesquisa = null)
     {
         $banco = $this->conectar();
 
-        $query = "SELECT * FROM lista WHERE id_criador = :id_criador ORDER BY id DESC";
+        $query = "SELECT * FROM lista WHERE id_criador = :id_criador ";
+
+        if (!empty($pesquisa)) {
+            $query .= "AND titulo LIKE '%$pesquisa%' OR descricao LIKE '%$pesquisa%' ORDER BY id DESC";
+        } else {
+            $query .= "ORDER BY id DESC";
+        }
 
         $result = $banco->prepare($query);
         $result->bindParam(':id_criador', $_SESSION['USUARIO_ID']);

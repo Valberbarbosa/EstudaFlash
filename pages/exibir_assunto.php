@@ -3,12 +3,18 @@
 class ExibirAssunto extends Conexao
 {
 
-    public function listar($id_lista)
+    public function listar($id_lista, $pesquisa)
     {
         $banco = $this->conectar();
 
         if (!empty($id_lista)) {
-            $query = "SELECT * FROM assunto WHERE id_lista = :id_lista AND id_criador = :id_criador ORDER BY id DESC";
+            $query = "SELECT * FROM assunto WHERE id_lista = :id_lista AND id_criador = :id_criador ";
+
+            if (!empty($pesquisa)) {
+                $query .= "AND titulo LIKE '%$pesquisa%' OR descricao LIKE '%$pesquisa%' ORDER BY id DESC";
+            } else {
+                $query .= "ORDER BY id DESC";
+            }
 
             $result = $banco->prepare($query);
             $result->bindParam(':id_lista', $id_lista);

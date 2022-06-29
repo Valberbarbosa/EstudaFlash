@@ -1,5 +1,6 @@
 
 <?php
+session_start();
 require_once('./conexao.php');
 require_once('./validarInformacoes.php');
 class CadastrarUsuario extends Conexao
@@ -21,23 +22,28 @@ class CadastrarUsuario extends Conexao
     public function cadastro()
     {
         $banco = $this->conectar();
-
+        $foto = "blank-profile-picture-973460.svg";
         if (!empty($this->nome) and !empty($this->email) and !empty($this->senha)) {
             if (!$this->getUserExist()) {
-                $query = "INSERT INTO usuario (nome, email, senha, data_nascimento) VALUES (:nome, :email, :senha, :data_nascimento)";
+                $query = "INSERT INTO usuario (nome, email, senha, foto, data_nascimento) VALUES (:nome, :email, :senha, :foto, :data_nascimento)";
 
                 $result = $banco->prepare($query);
                 $result->bindParam(':nome', $this->nome);
                 $result->bindParam(':email', $this->email);
                 $result->bindParam(':senha', password_hash($this->senha, PASSWORD_DEFAULT));
+                $result->bindParam(':foto', $foto);
                 $result->bindParam(':data_nascimento', $this->nascimento);
                 if ($result->execute()) {
                     if($this->login()){
                         return true;
                     }
                 }
+            }else{
+                $_SESSION['TIPO_ALERTA'] = 'warning';
+                return false;
             }
         }
+        $_SESSION['TIPO_ALERTA'] = 'error';
         return false;
     }
     public function login()
@@ -48,15 +54,15 @@ class CadastrarUsuario extends Conexao
             $query = "SELECT * FROM usuario WHERE email = :email";
 
             $result = $banco->prepare($query);
-            $result->bindParam(':email', $this->email);
+            $result->bindValue(':email', $this->email);
             $hash = uniqid();
             if ($result->execute()) {
                 $dados = $result->fetchAll(PDO::FETCH_ASSOC);
                 if ($dados[0]['email'] == $this->email and password_verify($this->senha, $dados[0]['senha'])) {
                     $query = "UPDATE usuario SET hash = :hash WHERE id = :id";
                     $result = $banco->prepare($query);
-                    $result->bindParam(':hash', $hash);
-                    $result->bindParam(':id', $dados[0]['id']);
+                    $result->bindValue(':hash', $hash);
+                    $result->bindValue(':id', $dados[0]['id']);
                     if ($result->execute()) {
                         $idSession = password_hash($dados[0]['id'], PASSWORD_DEFAULT);
                         $hashSession = password_hash($hash, PASSWORD_DEFAULT);
@@ -77,7 +83,7 @@ class CadastrarUsuario extends Conexao
             $query = "SELECT * FROM usuario WHERE email = :email";
 
             $result = $banco->prepare($query);
-            $result->bindParam(':email', $this->email);
+            $result->bindValue(':email', $this->email);
             if ($result->execute()) {
                 $dados = $result->fetchAll(PDO::FETCH_ASSOC);
                 if (count($dados) > 0) {
