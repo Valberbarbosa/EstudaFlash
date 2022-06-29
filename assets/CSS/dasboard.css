@@ -5,9 +5,21 @@
   min-height: 100%;
 }
 
+.trumbowyg-box {
+  min-height: 250px !important;
+  resize: vertical;
+}
+
+.trumbowyg-box .trumbowyg-editor {
+  min-height: 180px !important;
+  resize: vertical;
+}
+
 aside {
   user-select: none;
   width: 300px;
+  height: 100%;
+  min-height: 100vh;
   background-color: #F8F8FB;
   overflow-y: auto;
 }
@@ -170,8 +182,61 @@ header .header-acoes ul {
 }
 
 header .header-acoes ul li {
+  position: relative;
   font-size: 1.5rem;
   padding-right: 20px;
+}
+
+header .header-acoes ul li i {
+  cursor: pointer;
+}
+
+header .header-acoes ul li span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  background-color: #197AFF;
+  position: absolute;
+  top: -5px;
+  right: 10px;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+}
+
+header .header-acoes ul li .notificacao {
+  display: none;
+  position: absolute;
+  right: 0;
+  box-shadow: 1px 2px 11px rgba(148, 148, 148, 0.25);
+  background-color: #ffffff;
+  border-radius: 2.5px;
+  width: 250px;
+  height: auto;
+  padding: 7.5px;
+}
+
+header .header-acoes ul li .notificacao p {
+  font-size: .9rem;
+  margin-bottom: .5rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid #4B5563;
+}
+
+header .header-acoes ul li .notificacao p:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+header .header-acoes ul li .notificacao a {
+  color: #4B5563;
+}
+
+header .header-acoes ul li:hover .notificacao,
+header .header-acoes ul li:active .notificacao {
+  display: block !important;
 }
 
 header .header-acoes .header-logo {
@@ -565,8 +630,32 @@ header .header-acoes-nome {
   background: #113FFB;
   color: #ffffff;
   font-size: 1rem;
-  margin: 25px auto;
   border-radius: 5px;
+  margin: 25px auto;
+}
+
+#dashboard .dashbord-container-btn-editar {
+  padding: 11.5px 28.5px;
+  border: 1px solid #113FFB;
+  color: #113FFB;
+  font-size: 1rem;
+  border-radius: 5px;
+  margin-top: 5px;
+  background-color: transparent;
+}
+
+#dashboard .dashbord-container-btn-deletar {
+  padding: 11.5px 28.5px;
+  border: 1px solid #fb3411;
+  background-color: #fb3411;
+  color: #ffffff;
+  font-size: 1rem;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+#dashboard .dashbord-container-btn-deletar a {
+  color: #ffffff;
 }
 
 #dashboard .dashbord-container-btn-add-cartoes {
@@ -604,6 +693,11 @@ header .header-acoes-nome {
   }
   #dashboard .dashbord-container-btn-add-cartoes {
     width: 100%;
+  }
+  #dashboard .dashbord-container-btn-add-licao {
+    width: 100%;
+    height: 50px;
+    padding: 5px 30px;
   }
   #dashboard .dashbord-acoes-opcoes button {
     width: 100%;
@@ -692,6 +786,19 @@ header .header-acoes-nome {
         &:active>.back {
             transform: perspective(600px) rotateY(0deg);
         }*/
+}
+
+#dashboard .dashboard-card-conteudo-cartoes .dashboard-card-acao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #92a8ff79;
+  font-size: 1rem;
 }
 
 #dashboard .dashboard-card-conteudo-cartoes .front,
