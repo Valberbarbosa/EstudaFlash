@@ -20,8 +20,8 @@ const cartaoContentTotalAtual = document.querySelector('.progress-total-atual');
 var numInicialCartao = 0
 var numTag = 0;
 let progress = 0;
-cartaoContentTotal.innerHTML = cartaoContent.length;
-cartaoContentTotalAtual.innerHTML = numTag + 1;
+//cartaoContentTotal.innerHTML = cartaoContent.length;
+//cartaoContentTotalAtual.innerHTML = numTag + 1;
 progress = (100 / cartaoContent.length) * 1;
 cartaoContentProgress.style.width = progress + "%";
 
